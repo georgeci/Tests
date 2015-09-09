@@ -1,8 +1,18 @@
 apply plugin: 'com.android.application'
 apply plugin: 'spoon'
 android {
+    packagingOptions{
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'LICENSE.txt'
+    }
     compileSdkVersion 23
-    buildToolsVersion "23.0.0"
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "com.georgeci.tests"
@@ -10,7 +20,9 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.georgeci.tests.test.CRunner"
+        testHandleProfiling true
+        testFunctionalTest true
     }
     buildTypes {
         release {
@@ -20,20 +32,22 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy.force 'com.android.support:support-annotations:23.0.1'
+    resolutionStrategy.force 'junit:junit:4.12'
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.0.1'
-    androidTestCompile('com.android.support.test:runner:0.3') {
-        exclude module: 'support-annotations'
-    }
-    androidTestCompile('com.android.support.test:rules:0.3') {
-        exclude module: 'support-annotations'
-    }
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2') {
-        exclude module: 'support-annotations'
-    }
+    androidTestCompile 'com.android.support.test:runner:0.3'
+    androidTestCompile 'com.android.support.test:rules:0.3'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.9'
-    //    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:+')
+    //    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:+'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'info.cukes:cucumber-android:1.2.2'
+        compile 'info.cukes:cucumber-junit:1.2.2'
+//    compile 'info.cukes:cucumber-jvm:1.2.2'
 }
