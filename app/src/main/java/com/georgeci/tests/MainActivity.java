@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -12,9 +12,16 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    @OnClick(R.id.btn1)
-    void click(){
+    @Bind(R.id.txt)
+    TextView txt;
 
+    @OnClick(R.id.btn1)
+    void click() {
+        txt.setText("1");
+    }
+    @OnClick(R.id.btn2)
+    void click2() {
+        txt.setText("2");
     }
 
     @Override
@@ -22,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        txt.setText("0");
     }
 
     @Override

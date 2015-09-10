@@ -4,52 +4,67 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.georgeci.tests.*;
 import com.georgeci.tests.R;
+import com.squareup.spoon.Spoon;
 
 import org.junit.runner.RunWith;
 
 import cucumber.api.CucumberOptions;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.junit.Cucumber;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 //@RunWith(CRunner.class)
-//@RunWith(Cucumber.class)
-@CucumberOptions(features = "features")//, glue = {"classpath:com.georgeci.tests.test"})
+@RunWith(Cucumber.class)
+@CucumberOptions(features = "features", format = {"pretty","html:/mnt/sdcard/qwe/html", "json:/mnt/sdcard/qwe/jreport"})//, glue = {"classpath:com.georgeci.tests.test"})
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
     public MainActivityTest() {
         super(MainActivity.class);
     }
 
-
-//    @Override
-//    protected void setUp() throws Exception {
-//        super.setUp();
-//        getActivity();
+//    @Before(order = 0)
+////    @Override
+//    protected void init(){
+////        super.setUp();
+//
 //    }
 
+
+
     @Given("^a$")
-    public void givenLoginTryCounter() {
+    public void a() {
+        getActivity();
+
 //        String checkString = String.format(getActivity().getResources().getString(R.string.login_try_left), counterValue);
 //        onView(withId(R.id.lblCounter)).check(matches(withText(checkString)));
-        onView(withId(R.id.btn1)).check(matches(withText("qwe")));
+        onView(withId(R.id.txt)).check(matches(withText("0")));
     }
 
     @When("^b$")
-    public void clickOnBackButton() {
+    public void b() {
 //        ViewActions.pressBack();
-        onView(withId(R.id.btn1)).check(matches(withText("qwe")));
+        onView(withId(R.id.btn1)).perform(click());
     }
 
-    @Then("^c$")
-    public void checkLoginTryCounter() {
-//        givenLoginTryCounter(counterValue);
-        onView(withId(R.id.btn1)).check(matches(withText("qwe")));
+    @When("^bb$")
+    public void bb() {
+//        ViewActions.pressBack();
+        onView(withId(777)).perform(click());
+    }
+
+    @Then("^c (\\d)$")
+    public void c(Integer counterValue) {
+        Spoon.screenshot(getActivity(),"initial_state","qwe", "ea");
+        onView(withId(R.id.txt)).check(matches(withText(Integer.toString(counterValue))));
+
     }
 
 //    @SmallTest
